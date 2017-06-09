@@ -1,9 +1,11 @@
 function [ normalized ] = houghTransform( dataset )
     
-    boundaryLimit = 10;
-    
+%     boundaryLimit = 10;
+    width=25;
+    height = 50;
     %CALCAULATE HOUGH TRANSFORM
     for i=1:size(dataset.cropImage,3)
+        disp (i)
         rotI = dataset.cropImage(:,:,i);
         BW = edge(rotI,'canny');
         [H,theta,rho] = hough(BW);
@@ -36,10 +38,14 @@ function [ normalized ] = houghTransform( dataset )
         % highlight the longest line segment
 %         plot(xy_long(:,1),xy_long(:,2),'LineWidth',2,'Color','red');
         
-        normalized = zeros(size(dataset.cropImage,1), size(dataset.cropImage,2), 'double');
-        normalized(xy(1,2)-boundaryLimit:xy(1,2)+boundaryLimit,xy(1,1)-boundaryLimit:xy(1,1)+boundaryLimit,1) = ...
-            dataset.cropImage(xy(1,2)-boundaryLimit:xy(1,2)+boundaryLimit,xy(1,1)-boundaryLimit:xy(1,1)+boundaryLimit,1);
-        
+%         % NOT CENTER
+%         normalized = zeros(size(dataset.cropImage,1), size(dataset.cropImage,2), 'double');
+%         normalized(xy(1,2)-boundaryLimit:xy(1,2)+boundaryLimit,xy(1,1)-boundaryLimit:xy(1,1)+boundaryLimit,1) = ...
+%             dataset.cropImage(xy(1,2)-boundaryLimit:xy(1,2)+boundaryLimit,xy(1,1)-boundaryLimit:xy(1,1)+boundaryLimit,1);
+         s  = regionprops(rotI,'centroid');
+         normalized(:,:,i) = dataset.cropImage(s.Centroid(1,2)-height:s.Centroid(1,2)+height, ...
+             s.Centroid(1,1)-width:s.Centroid(1,1)+width,1);
+         
     end
 
     

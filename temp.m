@@ -1,4 +1,4 @@
-a=1;
+a=60;
 rotI = dataset.cropImage(:,:,a);
 BW = edge(rotI,'canny');
 [H,theta,rho] = hough(BW);
@@ -45,15 +45,21 @@ for k = 1:length(lines)
    end
 end
 
-% highlight the longest line segment
-plot(xy_long(:,1),xy_long(:,2),'LineWidth',2,'Color','red');
+% % highlight the longest line segment
+% plot(xy_long(:,1),xy_long(:,2),'LineWidth',2,'Color','red');
 
 % normalized(:,:,i) = zeros(size(dataset.cropImage,1), size(dataset.cropImage,2), 'double');
 % normalized(xy(1,1)-50:xy(1,1)+50,xy(1,2)-50:xy(1,2)+50,i) = 1;
 
-width=25;
-height = 75;
-a = zeros(size(dataset.cropImage,1), size(dataset.cropImage,2), 'double');
-a(xy(1,2)-height:xy(1,2)+height,xy(1,1)-width:xy(1,1)+width,1) = ...
-    dataset.cropImage(xy(1,2)-height:xy(1,2)+height,xy(1,1)-width:xy(1,1)+width,1);
-figure;imshow(a);
+% create boundary selection
+% width=25;
+% height = 50;
+% a = zeros(size(dataset.cropImage,1), size(dataset.cropImage,2), 'double');
+% a(xy(1,2)-height:xy(1,2)+height,xy(1,1)-width:xy(1,1)+width,1) = ...
+%     dataset.cropImage(xy(1,2)-height:xy(1,2)+height,xy(1,1)-width:xy(1,1)+width,a);
+% figure;imshow(a);
+
+ s  = regionprops(rotI,'centroid');
+ normalized(:,:,1) = dataset.cropImage(s.Centroid(1,2)-height:s.Centroid(1,2)+height, ...
+     s.Centroid(1,1)-width:s.Centroid(1,1)+width,1);
+ figure; imshow(normalized(:,:,1));
