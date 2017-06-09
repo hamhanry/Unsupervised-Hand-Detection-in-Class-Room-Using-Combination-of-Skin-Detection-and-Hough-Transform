@@ -4,6 +4,8 @@ clear all;
 dataset = generateDataset();
 dataset.binaryImage = skinDetection(dataset);
 [dataset.cropImage, dataset.x, dataset.y] = clearBorder(dataset);
+% dataset.normalizedImage = houghTransform(dataset);
+
 % disp('HSV');
 % for i=1:size(dataset.images,4)
 %     dataset.hsvImg(:,:,:,i) = rgb2hsv(dataset.images(:,:,:,i));

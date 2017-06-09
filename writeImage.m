@@ -1,5 +1,14 @@
 function [] = writeImage(dataset)
 
+% disp('write original');
+% folderPath = 'result/original/';
+% mkdir(folderPath);
+% for i=1:size(dataset.images,4)
+%     [~,fileName,ext] = fileparts(dataset.paths{i});
+%     path = [folderPath, fileName, ext];
+%     imwrite(dataset.images(:,:,:,i), path);
+% end
+
 % disp('write hsv');
 % folderPath = 'result/hsv2/';
 % mkdir(folderPath);
@@ -18,14 +27,14 @@ function [] = writeImage(dataset)
 %     imwrite(dataset.binaryImage(:,:,i), path);
 % end
 
-disp('write croppedImage');
-folderPath = 'result/cropImg/';
-mkdir(folderPath);
-for i=1:size(dataset.cropImage,3)
-    [~,fileName,ext] = fileparts(dataset.paths{i});
-    path = [folderPath, fileName, ext];
-    imwrite(dataset.cropImage(:,:,i), path);
-end
+% disp('write croppedImage');
+% folderPath = 'result/cropImg/';
+% mkdir(folderPath);
+% for i=1:size(dataset.cropImage,3)
+%     [~,fileName,ext] = fileparts(dataset.paths{i});
+%     path = [folderPath, fileName, ext];
+%     imwrite(dataset.cropImage(:,:,i), path);
+% end
 
 % disp('write gray');
 % folderPath = 'result/gray/';
@@ -44,5 +53,14 @@ end
 %     path = [folderPath, fileName, ext];
 %     imwrite(dataset.histogramEqImg(:,:,i), path);
 % end
+
+disp('write handDetection');
+folderPath = 'result/handDetection/';
+mkdir(folderPath);
+for i=1:size(dataset.normalizedImage,3)
+    [~,fileName,ext] = fileparts(dataset.paths{i});
+    path = [folderPath, fileName, ext];
+    imwrite(dataset.normalizedImage(:,:,i), path);
+end
 
 

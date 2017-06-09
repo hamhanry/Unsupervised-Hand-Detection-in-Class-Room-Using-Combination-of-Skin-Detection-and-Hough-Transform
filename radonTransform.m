@@ -1,5 +1,5 @@
-bw = edge(dataset.binaryImage(:,:,1));
-theta = 0:179;
+bw = edge(dataset.cropImage(:,:,145));
+theta = 0:90;
 [R,xp] = radon(bw,theta);
 figure
 imagesc(theta, xp, R); colormap(hot);
