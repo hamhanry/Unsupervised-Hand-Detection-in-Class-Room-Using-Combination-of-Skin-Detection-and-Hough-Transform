@@ -8,8 +8,8 @@ function [ cropImg, x, y ] = clearBorder( dataset )
     yStart= 200;
     yEnd = 200;
     
-    x = [midWidth-xStart, midWidth+xEnd];
-    y = [midHeight-yStart, midHeight+yEnd];
+    x = [midWidth-xStart, midWidth+xEnd-1];
+    y = [midHeight-yStart, midHeight+yEnd-1];
     
     for i=1:size(dataset.binaryImage,3)
         cropImg(:,:,i) = dataset.binaryImage(x(1):x(2), y(1):y(2), i);
