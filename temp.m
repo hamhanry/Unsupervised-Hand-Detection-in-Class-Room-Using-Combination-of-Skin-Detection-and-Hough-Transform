@@ -1,6 +1,6 @@
 close all;
 
-a=145;
+a=6;
 rotI = dataset.cropImage(:,:,a);
 BW = edge(rotI,'canny');
 [H,theta,rho] = hough(BW);
@@ -26,7 +26,7 @@ hold on
 plot(x,y,'s','color','black');
 
 %GET THE LINES
-lines = houghlines(BW,theta,rho,P,'FillGap', 5 ,'MinLength',7);
+lines = houghlines(BW,theta,rho,P,'FillGap', 5 ,'MinLength',5);
 
 %DEPICT PEAKS IN REAL IMAGE
 figure, imshow(dataset.cropImage(:,:,a)), hold on

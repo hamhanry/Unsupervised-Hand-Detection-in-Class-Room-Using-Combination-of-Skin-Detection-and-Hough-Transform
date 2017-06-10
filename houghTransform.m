@@ -14,7 +14,7 @@ function [ normalized ] = houghTransform( dataset )
         P = houghpeaks(H,1,'threshold',ceil(0.3*max(max(H(:)))));
     
         %GET THE LINES
-        lines = houghlines(BW,theta,rho,P,'FillGap',1,'MinLength',7);
+        lines = houghlines(edgeImage,theta,rho,P,'FillGap',5,'MinLength',7);
         
         %DEPICT PEAKS IN REAL IMAGE
         for k = 1:length(lines)
