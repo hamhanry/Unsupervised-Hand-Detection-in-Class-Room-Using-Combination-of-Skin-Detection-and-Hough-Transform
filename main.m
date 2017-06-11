@@ -1,10 +1,20 @@
 clc;
 clear all;
 
+disp('Generate Dataset');
 dataset = generateDataset();
+
+disp('Skin Detection');
 dataset.binaryImage = skinDetection(dataset);
+
+disp('crop threshold Image');
 [dataset.cropImage, dataset.x, dataset.y] = clearBorder(dataset);
-% dataset.normalizedImage = houghTransform(dataset);
+
+clear dataset.images;
+clear dataset.binaryImage;
+
+disp('hand detection');
+dataset.normalizedImage = houghTransform(dataset);
 
 % disp('HSV');
 % for i=1:size(dataset.images,4)

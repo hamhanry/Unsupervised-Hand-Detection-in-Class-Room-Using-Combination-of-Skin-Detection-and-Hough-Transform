@@ -36,6 +36,16 @@ function [] = writeImage(dataset)
 %     imwrite(dataset.cropImage(:,:,i), path);
 % end
 
+disp('write centerHand');
+folderPath = 'result/handDetection/';
+mkdir(folderPath);
+for i=1:size(dataset.normalizedImage,3)
+    [~,fileName,ext] = fileparts(dataset.paths{i});
+    path = [folderPath, fileName, ext];
+    imwrite(dataset.normalizedImage(:,:,i), path);
+end
+
+
 % disp('write gray');
 % folderPath = 'result/gray/';
 % mkdir(folderPath);

@@ -5,39 +5,68 @@ function [ normalized ] = checkHandBoundary( dataset, selectedObject, centroids,
     tempLeft = width;
     tempRight = width;
     
-    
-    if centroids(selectedObject,1)-tempUp < 0  % CHECK UP
-        tempUp = floor(centroids(selectedObject,1))-height-1;
-        tempBottom = tempBottom - (height-tempUp);
-        if tempBottom > size(dataset.cropImage,2)
-            tempBottom = size(dataset.cropImage,2);
+    temp = floor(centroids(selectedObject,1)-height);
+    tempUp = temp;
+    if temp < 0  % CHECK UP
+        disp 'checkUp'
+        tempUp = floor(centroids(selectedObject,1)) - abs(temp);
+        tempBottom = tempBottom + tempUp;
+        
+        if (tempBottom-tempUp) ~= 2*height
+            disp 'checkUp2'
+            temp = (2*height) - (tempBottom-tempUp)
+            tempBottom = tempBottom + temp;
         end
     end
     
-    if centroids(selectedObject,1) + tempBottom > size(dataset.cropImage,2) % CHECK BOTTOM
-        tempBottom = size(dataset.cropImage,2) - (floor(centroids(selectedObject,1)) + height-1);
-        tempUp = tempUp + (height-tempBottom);
-    end
-    
-    if centroids(selectedObject,2) - tempLeft < 0 % CHECK LEFT
-        tempLeft = floor(centroids(selectedObject,2))-width-1;
-        tempRight = tempRight - (width-tempLeft);
-        if tempRight > size(dataset.cropImage,1)
-            tempRight = size(dataset.cropImage,1);
+    temp = floor(centroids(selectedObject,1) + height);
+    if temp > size(dataset.cropImage,2) % CHECK BOTTOM
+        disp 'checkBottom'
+        tempBottom = size(dataset.cropImage,2);
+        tempUp = tempUp + (size(dataset.cropImage,2) - temp);
+        
+        if (tempBottom-tempUp) ~= 2*height
+            temp = (2*height) - (tempBottom-tempUp)
+            tempUp = tempUp - temp;
         end
+    elseif tempBottom == height
+        tempBottom = temp;
     end
     
-    if centroids(selectedObject,2) + tempRight > size(dataset.cropImage,1) % CHECK RIGHT
-        tempRight = size(dataset.cropImage,1) - (floor(centroids(selectedObject,2)) + width-1);
-        tempLeft = tempLeft + (width-tempRight);
+    temp = floor(centroids(selectedObject,2) - tempLeft);
+    if temp < 0 % CHECK LEFT
+        disp 'checkLeft'
+        tempLeft = floor(centroids(selectedObject,2)) - abs(temp);
+        tempRight = tempRight + tempLeft;
+        
+        if (tempRight-tempLeft) ~= 2*width
+            temp = (2*width) - (tempRight-tempLeft)
+            tempRight = tempRight + temp;
+        end
+    elseif tempLeft==width
+        tempLeft = temp;
+    end
+    
+    temp = floor(centroids(selectedObject,2) + tempRight);
+    if  temp > size(dataset.cropImage,1) % CHECK RIGHT
+        disp 'checkRight'
+        tempRight = size(dataset.cropImage,1);
+        tempLeft = tempLeft + (size(dataset.cropImage,1) - temp);
+        
+         if (tempRight-tempLeft) ~= 2*width
+            temp = (2*width) - (tempRight-tempLeft)
+            tempLeft = tempLeft - temp;
+         end
+    elseif tempRight==width
+        tempRight = temp;
     end
 
-    widthRange = floor(centroids(selectedObject,2)-tempLeft-1):floor(centroids(selectedObject,2)+tempRight-1);
-    heightRange = floor(centroids(selectedObject,1)-tempUp-1):floor(centroids(selectedObject,1)+tempBottom-1);
+    widthRange = tempLeft+1:tempRight-1;
+    heightRange = tempUp+1:tempBottom-1;
     
 %     dataset.image
 %     [1 2] = [width height]
-    normalized(1:2) = dataset.cropImage(widthRange-1, heightRange-1, imgIndex);
+    normalized = dataset.cropImage(widthRange, heightRange, imgIndex);
     
 end
 

@@ -1,39 +1,29 @@
 function [ normalized ] = houghTransform( dataset )
     
-%     boundaryLimit = 10;
-    width=25;
-    height = 50;
+    boxAreaSelectedObject = 20;
+    width=60;
+    height = 60;
+%     182
     %CALCAULATE HOUGH TRANSFORM
     for i=1:size(dataset.cropImage,3)
         disp (i)
-        rotI = dataset.cropImage(:,:,i);
-        BW = edge(rotI,'canny');
-        [H,theta,rho] = hough(BW);
+        edgeImage = edge(dataset.cropImage(:,:,i),'canny');
+        [H,theta,rho] = hough(edgeImage);
 
         %GET THE PEAKS
         P = houghpeaks(H,1,'threshold',ceil(0.3*max(max(H(:)))));
     
         %GET THE LINES
-        lines = houghlines(edgeImage,theta,rho,P,'FillGap',5,'MinLength',7);
+        lines = houghlines(edgeImage,theta,rho,P,'FillGap',5,'MinLength',15);
         
         %DEPICT PEAKS IN REAL IMAGE
         for k = 1:length(lines)
            xy = [lines(k).point1; lines(k).point2];
         end
         
-         s  = regionprops(rotI,'centroid');
-         normalized(:,:,i) = ...
-             dataset.cropImage(s.Centroid(1,2)-height:s.Centroid(1,2)+height, ...
-                                s.Centroid(1,1)-width:s.Centroid(1,1)+width,1);
+        normalized(:,:,i) = getHandCenterCoor(dataset, dataset.cropImage(:,:,i), xy, width, height, boxAreaSelectedObject,i);
          
     end
-
     
-
-    
-
-    
-
-
 end
 
