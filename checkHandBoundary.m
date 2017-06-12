@@ -61,8 +61,8 @@ function [ normalized ] = checkHandBoundary( dataset, selectedObject, centroids,
         tempRight = temp;
     end
 
-    widthRange = tempLeft+1:tempRight-1;
-    heightRange = tempUp+1:tempBottom-1;
+    widthRange = tempLeft+1:tempRight;
+    heightRange = tempUp+1:tempBottom;
     
 %     dataset.image
 %     [1 2] = [width height]

@@ -1,9 +1,9 @@
 function [ normalized ] = houghTransform( dataset )
     
     boxAreaSelectedObject = 20;
-    width=60;
-    height = 60;
-%     182
+    width=45;
+    height = 45;
+%     182, 321
     %CALCAULATE HOUGH TRANSFORM
     for i=1:size(dataset.cropImage,3)
         disp (i)
