@@ -1,12 +1,12 @@
 function [dataset] = defectGenerateDataSet()
 
-tmpPositive = dir('dataset/301/*.bmp');
+tmpPositive = dir('dataset/322/*.bmp');
 % tmpNegative = dir('dataset\case2\noDefect\*.png');
 
 setPositive = {tmpPositive.name}';
 % setNegative = {tmpNegative.name}';
 
-tmpPathPositive = 'dataset/301/';
+tmpPathPositive = 'dataset/322/';
 % tmpPathNegative = 'dataset\case2\noDefect\';
 
 

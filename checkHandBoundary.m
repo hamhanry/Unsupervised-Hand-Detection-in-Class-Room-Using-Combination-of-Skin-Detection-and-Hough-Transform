@@ -12,6 +12,10 @@ function [ normalized ] = checkHandBoundary( dataset, selectedObject, centroids,
         tempUp = floor(centroids(selectedObject,1)) - abs(temp);
         tempBottom = tempBottom + tempUp;
         
+        if (tempUp)<0
+            tempUp=0;
+        end
+        
         if (tempBottom-tempUp) ~= 2*height
             disp 'checkUp2'
             temp = (2*height) - (tempBottom-tempUp)
@@ -38,6 +42,10 @@ function [ normalized ] = checkHandBoundary( dataset, selectedObject, centroids,
         disp 'checkLeft'
         tempLeft = floor(centroids(selectedObject,2)) - abs(temp);
         tempRight = tempRight + tempLeft;
+        
+        if (tempLeft)<0
+            tempLeft=0;
+        end
         
         if (tempRight-tempLeft) ~= 2*width
             temp = (2*width) - (tempRight-tempLeft)

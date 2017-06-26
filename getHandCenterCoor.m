@@ -50,7 +50,7 @@ function [ normalized ] = getHandCenterCoor( dataset, thresholdImage, xy, width,
                 if selectedObject > 0 break;
                 end
             catch 
-                disp ('index overflow');
+%                 disp ('index overflow');
             end
         end
     end

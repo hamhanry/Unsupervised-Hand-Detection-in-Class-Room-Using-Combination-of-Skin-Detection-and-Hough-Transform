@@ -32,5 +32,5 @@ dataset.normalizedImage = houghTransform(dataset);
 % end
 
 % clear i;
-% writeImage(dataset);
+writeImage(dataset);
 
